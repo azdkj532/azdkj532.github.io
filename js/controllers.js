@@ -1,19 +1,22 @@
-'use strict';
-
 /* Controllers */
 
-var phonecatControllers = angular.module('phonecatControllers', []);
+var dmhyBotCtrls = angular.module('dmhyBotCtrls', []);
 
-phonecatControllers.controller('PhoneListCtrl', ['$scope', '$http',
-  function($scope, $http) {
-    $http.get('phones/phones.json').success(function(data) {
-      $scope.phones = data;
-    });
+dmhyBotCtrls.controller('homeCtrl', ['$scope', '$http',
+    function($scope, $http) {
+        $scope.nowPage = 'Home';
+    }]);
 
-    $scope.orderProp = 'age';
-  }]);
+dmhyBotCtrls.controller('historyCtrl', ['$scope', 
+    function($scope, $http) {
+    }]);
 
-phonecatControllers.controller('PhoneDetailCtrl', ['$scope', '$routeParams',
-  function($scope, $routeParams) {
-    $scope.phoneId = $routeParams.phoneId;
-  }]);
+dmhyBotCtrls.controller('navCtrl', ['$scope', '$location', 
+    function($scope, $location ){
+        $scope.navbarActive = function(nowPage){
+            path = $location.path().substr(1);
+            if( nowPage == path  )return 'active';
+            else return '';
+        };
+    }]);
+    

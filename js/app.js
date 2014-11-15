@@ -1,24 +1,22 @@
-'use strict';
-
 /* App Module */
 
-var phonecatApp = angular.module('phonecatApp', [
+var dmhyBotApp = angular.module('dmhyBotApp', [
   'ngRoute',
-  'phonecatControllers'
+  'dmhyBotCtrls'
 ]);
 
-phonecatApp.config(['$routeProvider',
+dmhyBotApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
-      when('/phones', {
-        templateUrl: 'partials/phone-list.html',
-        controller: 'PhoneListCtrl'
+      when('/home', {
+        templateUrl: 'templates/home.html',
+        controller: 'homeCtrl'
       }).
-      when('/phones/:phoneId', {
-        templateUrl: 'partials/phone-detail.html',
-        controller: 'PhoneDetailCtrl'
+      when('/history', {
+        templateUrl: 'templates/history.html',
+        controller: 'historyCtrl'
       }).
       otherwise({
-        redirectTo: '/phones'
+        redirectTo: '/home'
       });
   }]);

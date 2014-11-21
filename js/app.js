@@ -16,6 +16,10 @@ dmhyBotApp.config(['$routeProvider',
         templateUrl: 'templates/history.html',
         controller: 'historyCtrl'
       }).
+      when('/search',{
+          templateUrl: 'templates/search.html'
+          controller: 'searchingCtrl'
+      }).
       otherwise({
         redirectTo: '/home'
       });

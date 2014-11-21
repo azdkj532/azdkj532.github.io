@@ -17,7 +17,7 @@ dmhyBotApp.config(['$routeProvider',
         controller: 'historyCtrl'
       }).
       when('/search',{
-          templateUrl: 'templates/search.html'
+          templateUrl: 'templates/search.html',
           controller: 'searchingCtrl'
       }).
       otherwise({

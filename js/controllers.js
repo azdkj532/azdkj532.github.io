@@ -39,14 +39,14 @@ dmhyBotCtrls.controller('historyCtrl', ['$scope','$http',
 dmhyBotCtrls.controller('searchingCtrl', ['$scope', '$http',
     function( $scope, $http ){
         $scope.keywords = '';
-        $scope.result   = {};
+        $scope.result = {};
         $scope.sendKeyword = function(k){
-            request = $http.post('/dmhy/api/search', { "keyword":k });
-            request.suucess(function( data ){
+            request = $http.get('/dmhy/api/search/',{ "params":{ "keyword":k }});
+            request.success(function( data ){
                 $scope.result = data;
             });
             request.error(function(e){
-                $scope.result = "An error occured";
+                $scope.result = "An error occured <br>" + e;
             });
 
         };

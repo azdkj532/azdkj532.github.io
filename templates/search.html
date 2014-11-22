@@ -1,7 +1,13 @@
 <h1>Search DMHY site</h1>
-
-<input type="text" name="keyword" id="searchbox" value="" ng-model="keywords" />
-<button type="submit" ng-click="sendKeyword(keywords)">Search!</button>
+<form ng-submit="sendKeyword(keywords)">
+    <input type="text" name="keyword" id="searchbox" value="" ng-model="keywords" />
+    <input type="submit" value="Search">
+</form>
+<hr>
+<h2>關鍵字: {{keywords}}</h2>
+<ul ng-repeat="link in result">
+    <li><a href="{{link.url}}">[ {{link.date}}  ] {{link.title}}</a></li>
+</ul>
 <pre>
-    {{result}}
+{{result | json}}
 </pre>

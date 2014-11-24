@@ -1,4 +1,8 @@
 <h1>History</h1>
-<ul ng-repeat="record in records">
-    <li><span>[{{record.date}}]</span> <span>{{record.title}}</span></li>
+<hr />
+<input type="text" class="form-control" ng-model="searchText"/>
+<ul class="history" >
+    <li ng-repeat="record in records | filter:searchText ">
+        <span>[{{record.date}}]</span> <span>{{record.title}}</span>
+    </li>
 </ul>

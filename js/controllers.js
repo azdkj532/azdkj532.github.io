@@ -52,6 +52,11 @@ dmhyBotCtrls.controller('searchingCtrl', ['$scope', '$http',
         };
 }]);
 
+dmhyBotCtrls.controller('loginCtrl', ['$scope', '$http', 
+    function( $scope, $http ){
+        $scope.username = $scope.password = '';           
+}]);
+
 dmhyBotCtrls.controller('navCtrl', ['$scope', '$location', 
     function($scope, $location ){
         $scope.navbarActive = function(nowPage){

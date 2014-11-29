@@ -1,7 +1,7 @@
 <h1>Search DMHY site</h1>
-<form ng-submit="sendKeyword(keywords)">
-    <input type="text" name="keyword" id="searchbox" value="" ng-model="keywords" />
-    <input type="submit" value="Search">
+<form ng-submit="sendKeyword(keywords)" class="form-inline ">
+        <input type="text" class="form-control"  placeholder="keywords" ng-model="keywords" />
+        <input type="submit" class="btn btn-default" value="Search">
 </form>
 <hr>
 <h2>關鍵字: {{keywords}}</h2>

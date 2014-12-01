@@ -74,7 +74,7 @@ dmhyBotCtrls.controller('loginCtrl', ['$scope', '$http', '$location',
         });
 }]);
 
-dmhyBotCtrls.controller('logoutCtrl', ['$scope', '$http', '$location'
+dmhyBotCtrls.controller('logoutCtrl', ['$scope', '$http', '$location',
     function( $scope, $http, $location ){
         request = $http.get('/dmhy/logout');
         $location.path('/home').replace();

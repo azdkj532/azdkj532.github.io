@@ -1,6 +1,9 @@
 /* Controllers */
-
 var dmhyBotCtrls = angular.module('dmhyBotCtrls', []);
+
+dmhyBotCtrls.run([ '$scope', '$cookieStore', function( $scope, $cookieStore ){
+    $scope.csrf_token = $cookieStore.get('csrftoken');
+}]);
 
 dmhyBotCtrls.controller('homeCtrl', ['$scope', '$http',
     function($scope, $http) {
@@ -52,9 +55,29 @@ dmhyBotCtrls.controller('searchingCtrl', ['$scope', '$http',
         };
 }]);
 
-dmhyBotCtrls.controller('loginCtrl', ['$scope', '$http', 
-    function( $scope, $http ){
+dmhyBotCtrls.controller('loginCtrl', ['$scope', '$http', '$location', 
+    function( $scope, $http, $location ){
         $scope.username = $scope.password = '';           
+        console.log( $scope.csrf_token );
+        var request = $http({   'xsrfHeaderName':'X-CSRFToken', 
+                                'xsrfCookieName': $scope.csrf_token });
+        request.post('/dmhy/login', {   "username":username,
+                                        "password":password });
+        request.success(function(data){
+            if(data['status'] == true ){
+                $location.path('/home').replace();
+            }
+        });
+        request.error(function(data, status){
+            console.log(status);
+            console.log(data);
+        });
+}]);
+
+dmhyBotCtrls.controller('logoutCtrl', ['$scope', '$http', '$location'
+    function( $scope, $http, $location ){
+        request = $http.get('/dmhy/logout');
+        $location.path('/home').replace();
 }]);
 
 dmhyBotCtrls.controller('navCtrl', ['$scope', '$location', 
@@ -64,5 +87,5 @@ dmhyBotCtrls.controller('navCtrl', ['$scope', '$location',
             if( nowPage == path  )return 'active';
             else return '';
         };
-    }]);
+}]);
     

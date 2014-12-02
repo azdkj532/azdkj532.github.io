@@ -1,9 +1,10 @@
 /* Controllers */
-var dmhyBotCtrls = angular.module('dmhyBotCtrls', []);
+var dmhyBotCtrls = angular.module('dmhyBotCtrls', ['ngCookies']);
 
-dmhyBotCtrls.run([ '$scope', '$cookieStore', function( $scope, $cookieStore ){
-    $scope.csrf_token = $cookieStore.get('csrftoken');
-}]);
+dmhyBotCtrls.run(function($http){
+    $http.defaults.xsrfCookieName = 'csrftoken';//auto get the value of 'csrftoken' in the cookie
+    $http.defaults.xsrfHeaderName = 'X-CSRFToken';//auto add csrf token into the post header 
+});
 
 dmhyBotCtrls.controller('homeCtrl', ['$scope', '$http',
     function($scope, $http) {
@@ -55,23 +56,20 @@ dmhyBotCtrls.controller('searchingCtrl', ['$scope', '$http',
         };
 }]);
 
-dmhyBotCtrls.controller('loginCtrl', ['$scope', '$http', '$location', 
-    function( $scope, $http, $location ){
+dmhyBotCtrls.controller('loginCtrl', ['$scope', '$http', '$location', '$cookies', 
+    function( $scope, $http, $location, $cookies ){
         $scope.username = $scope.password = '';           
-        console.log( $scope.csrf_token );
-        var request = $http({   'xsrfHeaderName':'X-CSRFToken', 
-                                'xsrfCookieName': $scope.csrf_token });
-        request.post('/dmhy/login', {   "username":username,
-                                        "password":password });
-        request.success(function(data){
-            if(data['status'] == true ){
-                $location.path('/home').replace();
-            }
-        });
-        request.error(function(data, status){
-            console.log(status);
-            console.log(data);
-        });
+        var csrftoken = $cookies.csrftoken; 
+
+        $scope.login = function(username, password)
+        {
+            var login_data = {'username':username, 'password':password};
+            $http.post('/dmhy/login/', angular.toJson( login_data )).
+            success(function( data ){
+                $scope.result = data;
+            }).
+            error(function(){});
+        }
 }]);
 
 dmhyBotCtrls.controller('logoutCtrl', ['$scope', '$http', '$location',

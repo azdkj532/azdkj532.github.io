@@ -2,6 +2,7 @@
 
 var dmhyBotApp = angular.module('dmhyBotApp', [
   'ngRoute',
+  'ngCookies',
   'dmhyBotCtrls'
 ]);
 

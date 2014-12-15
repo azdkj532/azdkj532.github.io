@@ -44,6 +44,7 @@ dmhyBotCtrls.controller('searchingCtrl', ['$scope', '$http',
     function( $scope, $http ){
         $scope.keywords = '';
         $scope.result = {};
+        $scope.addTask = true;
         $scope.sendKeyword = function(k){
             request = $http.get('/dmhy/api/search/',{ "params":{ "keyword":k }});
             request.success(function( data ){
@@ -53,6 +54,9 @@ dmhyBotCtrls.controller('searchingCtrl', ['$scope', '$http',
                 $scope.result = "An error occured <br>" + e;
             });
 
+        };
+        $scope.addToQueue = function(){
+            
         };
 }]);
 

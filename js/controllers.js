@@ -1,6 +1,6 @@
 /* Controllers */
 
-var dmhyBotCtrls = angular.module('dmhyBotCtrls', []);
+var dmhyBotCtrls = angular.module('dmhyBotCtrls', ['ui.bootstrap']);
 
 dmhyBotCtrls.controller('homeCtrl', ['$scope', '$http',
     function($scope, $http) {

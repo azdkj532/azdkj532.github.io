@@ -6,6 +6,32 @@ dmhyBotCtrls.run(function($http){
     $http.defaults.xsrfHeaderName = 'X-CSRFToken';//auto add csrf token into the post header 
 });
 
+dmhyBotCtrls.service('verificateService', function($http){
+    var isLogin = false;
+    var login= function( user ){
+        var login_data = {'username':user.username, 'password':user.password};
+        $http.post('/dmhy/login/', angular.toJson( login_data )).
+        success(function( data ){
+            if( data['status'] == true ){
+                isLogin = true;
+            }else{
+                isLogin = false;
+            }
+        }).
+        error(function(){});
+    };
+    var logout= function(){
+        request = $http.get('/dmhy/logout');
+        isLogin = false;
+    };
+
+    return {
+        login: login,
+        logout: logout,
+        isLogined: function(){ return isLogin; }
+    };
+});
+
 dmhyBotCtrls.controller('homeCtrl', ['$scope', '$http',
     function($scope, $http) {
         $scope.reverse = true;
@@ -60,34 +86,30 @@ dmhyBotCtrls.controller('searchingCtrl', ['$scope', '$http',
         };
 }]);
 
-dmhyBotCtrls.controller('loginCtrl', ['$scope', '$http', '$location', '$cookies', 
-    function( $scope, $http, $location, $cookies ){
-        $scope.username = $scope.password = '';           
-        var csrftoken = $cookies.csrftoken; 
-
-        $scope.login = function(username, password)
-        {
-            var login_data = {'username':username, 'password':password};
-            $http.post('/dmhy/login/', angular.toJson( login_data )).
-            success(function( data ){
-                $scope.result = data;
-            }).
-            error(function(){});
-        }
+dmhyBotCtrls.controller('loginCtrl', ['$scope', '$http', '$location', '$cookies', 'verificateService',
+    function( $scope, $http, $location, $cookies, verificateService){
+        $scope.user={};
+        $scope.user.username = $scope.user.password = '';           
+        $scope.login = function( user ){
+            verificateService.login( user );
+        };
 }]);
 
-dmhyBotCtrls.controller('logoutCtrl', ['$scope', '$http', '$location',
-    function( $scope, $http, $location ){
-        request = $http.get('/dmhy/logout');
+dmhyBotCtrls.controller('logoutCtrl', ['$scope', '$http', '$location', 'verificateService',
+    function( $scope, $http, $location, verificateService){
+        verificateService.logout();
         $location.path('/home').replace();
 }]);
 
-dmhyBotCtrls.controller('navCtrl', ['$scope', '$location', 
-    function($scope, $location ){
+dmhyBotCtrls.controller('navCtrl', ['$scope', '$location', 'verificateService',
+    function($scope, $location, verificateService ){
         $scope.navbarActive = function(nowPage){
             path = $location.path().substr(1);
             if( nowPage == path  )return 'active';
             else return '';
+        };
+        $scope.isLogined = function(){
+            return verificateService.isLogined();
         };
 }]);
     

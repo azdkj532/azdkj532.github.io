@@ -25,6 +25,9 @@ dmhyBotApp.config(['$routeProvider',
             templateUrl: 'templates/login.html',
             controller: 'loginCtrl'
       }).
+      when('/logout', {
+            controller: 'logoutCtrl'
+      }).
       otherwise({
         redirectTo: '/home'
       });

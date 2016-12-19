@@ -1,2 +1,2 @@
 # dmhy-bot-client
-has been deprecated
+This project has been deprecated
